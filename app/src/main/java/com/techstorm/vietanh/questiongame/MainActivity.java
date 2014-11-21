@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import Database.DatabaseHelper;
+
 
 public class MainActivity extends Activity {
 
@@ -40,6 +42,8 @@ public class MainActivity extends Activity {
         txtPoint.setText("Điểm: 0");
         txtLevel.setText("Level: " + String.valueOf(level));
 
+        DatabaseHelper databaseHelper;
+
         GenerateTimer(false);
 
         btnYes.setOnClickListener(new View.OnClickListener() {
@@ -48,7 +52,7 @@ public class MainActivity extends Activity {
                 if (object.isResult()) {
                     Correct();
                 } else {
-                    if(!isGameOver) {
+                    if (!isGameOver) {
                         isGameOver = true;
                         GameOver();
                     }
@@ -65,7 +69,7 @@ public class MainActivity extends Activity {
                 if (!object.isResult()) {
                     Correct();
                 } else {
-                    if(!isGameOver) {
+                    if (!isGameOver) {
                         isGameOver = true;
                         GameOver();
                     }
@@ -101,15 +105,16 @@ public class MainActivity extends Activity {
         if (isRunning) {
             clock.cancel();
         }
-        clock = new CountDownTimer(4000, 100) {
+        clock = new CountDownTimer(2000, 100) {
             @Override
             public void onTick(long l) {
-                txtTimer.setText("00:0" + String.valueOf(l / 1000));
+                long seconds = l / 1000;
+                txtTimer.setText("00:0" + String.valueOf(seconds + 1));
             }
 
             @Override
             public void onFinish() {
-                if(!isGameOver) {
+                if (!isGameOver) {
                     isGameOver = true;
                     GameOver();
                 }
